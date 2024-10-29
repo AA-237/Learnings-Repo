@@ -1,19 +1,31 @@
-# # basix input fields
-# print("Save Contacts more securely")
+import os;
+import json
 
-# first_name = input("Enter First name: ")
-# print(first_name)
-# last_name = input("Enter Last name: ")
-# print(last_name)
-# phone_number = input("Enter Phone Number: ")
-# print(phone_number)
-
-# print(f"The number {phone_number} will be saved as: {first_name} {last_name}")
-# save_message = input("enter OK! to save: ")
-# print(save_message)
-
-# Attempt 2 adding functions 
 saved_contacts = []
+path = r"C:\Users\ander\Desktop\contacts.json.txt" # update this path to read from your local file 
+
+
+def load_contacts():
+    #Load contacts from the JSON file if it exists
+    if os.path.exists(path):
+        try:
+            with open(path, "r") as file:
+                global saved_contacts
+                saved_contacts = json.load(file)
+                print(f"Loaded {len(saved_contacts)} contacts.\n")
+        except json.JSONDecodeError:
+            print("File is empty or corrupted\n")
+    else:
+        print("No contacts found. Starting fresh.\n")
+
+def save_contacts():
+    """Save contacts to the JSON file."""
+    try:
+        with open(path, "w") as file:
+            json.dump(saved_contacts, file, indent=4)
+        print("Contacts saved successfully!\n")
+    except Exception as e:
+        print(f"An error occurred while saving contacts: {e}")       
 
 def add_contact():
     first_name = input("Enter First name: ").strip()
@@ -31,6 +43,7 @@ def add_contact():
 
     if save_message == "ok":
        saved_contacts.append(contact)
+       save_contacts()
        print("Contact saved successfully!\n")
     elif save_message != "ok":
         print("Wrong specification")    
@@ -52,6 +65,7 @@ def update_contact():
     view_contacts()
     try:
         contact_num = int(input("Enter the contact number to update: ")) - 1
+        # updating a particular field
         if 0 <= contact_num < len(saved_contacts):
             print("What do you want to update")
             print("1. First name")
@@ -72,7 +86,9 @@ def update_contact():
                 saved_contacts[contact_num]["phone_number"] = new_num
                 print("Number updated successfully!\n")
             else:
-                print("Invalid option entered")    
+                print("Invalid option entered") 
+                return
+            save_contacts()   
     except:
         print("Error Updating the contact")
         
@@ -94,6 +110,9 @@ def delete_contact():
 
 
 def main():
+    print("Starting the contact book application...")  
+
+    load_contacts() 
     while True:
         print("1. Add contact")
         print("2. View contacts")

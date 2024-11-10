@@ -178,10 +178,29 @@
 
 
 # Rock paper, scissors game
-import random
+# import random
 
-options = ("rock", "paper", "scissors")  
-player = None
-computer = random.choice(options)
+# options = ("rock", "paper", "scissors")  
+# player = None
+# computer = random.choice(options)
 
-player = input("Enter a choice (rock, paper, scissors)") 
+# player = input("Enter a choice (rock, paper, scissors)") 
+
+
+# OOP IN PYTHON
+""" 
+Objects == a bundle of related attributes (variables) and methods (functions)
+class == a blueprint used to design the structure and layout of an object
+"""
+
+# car1 = Car("Mustang", "black", 2024, False) 
+# print(car1.color)   
+
+# class variables = shared among all instances of a class
+#                   Defined outside of the constructor
+#                   Allows you to share among all objects created from that class
+
+# Inheritance = Allows a class to inherit attributes and methods from another class
+#               Helps with code reusability and extensibility
+#               class Child(Parent)
+
